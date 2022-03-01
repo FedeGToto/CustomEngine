@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <vector>
 #include "Actor.h"
+#include "Texture.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ public:
 private:
 	ExecutableSettings* currentSettings;
 	SDL_Window* gameWindow = NULL;
-	SDL_Surface* gameSurface = NULL;
+	SDL_Renderer* renderer = NULL;
 	SDL_Event gameEvents;
 
 	Uint64 now;

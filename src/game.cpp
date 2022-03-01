@@ -1,5 +1,6 @@
 #include "game.h"
 #include <stdio.h>
+#include "GameMath.h"
 
 vector<Actor*> Game::activeActors;
 bool Game::isRunning = false;
@@ -18,12 +19,8 @@ const void Game::Init(ExecutableSettings* newSettings)
 
 		if (gameWindow != NULL)
 		{
-			// Create the surface
-			gameSurface = SDL_GetWindowSurface(gameWindow);
-			if (gameSurface != NULL)
-			{
-				SDL_FillRect(gameSurface, NULL, SDL_MapRGB(gameSurface->format, 0xFF, 0xFF, 0xFF));
-			}
+			// Create the renderer
+			renderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
 		}
 		else
 		{
@@ -40,11 +37,16 @@ const void Game::Init(ExecutableSettings* newSettings)
 const void Game::Update()
 {
 	Actor* testActor = new Actor();
-	testActor->Start();
+	Texture* testTexture = new Texture(renderer, "./Resources/Sprites/TestSprite.bmp");
+	Vector2 newVector2 = Vector2(15,115);
+	testActor->Start(newVector2, testTexture);
 	while (isRunning)
 	{
 		now = SDL_GetTicks64();
 		deltaTime = now - last;
+
+		SDL_RenderClear(renderer);
+		
 		if (deltaTime > 1000.0 / currentSettings->targetFramerate) {
 			FPS = 1000.0 / deltaTime;
 
@@ -55,6 +57,26 @@ const void Game::Update()
 				{
 				case SDL_QUIT:
 					isRunning = false;
+				case SDL_KEYDOWN:
+					printf("A key has been pressed\n");
+					switch (gameEvents.key.keysym.sym)
+					{
+					case SDLK_UP:
+						testActor->setPos(testActor->getPos().x, testActor->getPos().y - 4);
+						break;
+					case SDLK_DOWN:
+						testActor->setPos(testActor->getPos().x, testActor->getPos().y + 4);
+						break;
+					case SDLK_LEFT:
+						testActor->setPos(testActor->getPos().x - 4, testActor->getPos().y);
+						break;
+					case SDLK_RIGHT:
+						testActor->setPos(testActor->getPos().x + 4, testActor->getPos().y);
+						break;
+					default:
+						break;
+					}
+					break;
 				default:
 					break;
 				}
@@ -63,11 +85,17 @@ const void Game::Update()
 			// Update logic
 			for (Actor* i : activeActors)
 			{
-				i->Update();
+				if (i->isActive)
+					i->Update();
 			}
 
 			//Update screen
-			SDL_UpdateWindowSurface(gameWindow);
+			for (Actor* i : activeActors)
+			{
+				if (i->isActive)
+					i->Render(renderer);
+			}
+			SDL_RenderPresent(renderer);
 		}
 	}
 }
