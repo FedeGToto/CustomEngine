@@ -4,11 +4,12 @@
 class Game
 {
 public:
+	Game() {};
+	virtual ~Game() {};
+
 	struct ExecutableSettings
 	{
 	public:
-		ExecutableSettings();
-		~ExecutableSettings();
 
 		const char* projectName;
 		int width;
@@ -21,10 +22,10 @@ public:
 
 	const void Close();
 
-	bool isRunning;
+	bool isRunning = false;
 
 private:
-	SDL_Window* gameWindow;
-	SDL_Surface* gameSurface;
+	SDL_Window* gameWindow = NULL;
+	SDL_Surface* gameSurface = NULL;
 	SDL_Event gameEvents;
 };

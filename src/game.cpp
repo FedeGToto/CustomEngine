@@ -14,6 +14,10 @@ const void Game::Init(ExecutableSettings* newSettings)
 		{
 			// Create the surface
 			gameSurface = SDL_GetWindowSurface(gameWindow);
+			if (gameSurface != NULL)
+			{
+				SDL_FillRect(gameSurface, NULL, SDL_MapRGB(gameSurface->format, 0xFF, 0xFF, 0xFF));
+			}
 		}
 		else
 		{
@@ -38,6 +42,11 @@ const void Game::Update()
 				break;
 			}
 		}
+
+		// Update logic
+
+		//Update screen
+		SDL_UpdateWindowSurface(gameWindow);
 	}
 }
 
