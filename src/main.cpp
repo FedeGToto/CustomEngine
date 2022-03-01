@@ -6,6 +6,7 @@ int main(int argc, char** argv)
 	projectSettings->projectName = "Custom Engine Test";
 	projectSettings->width = 640;
 	projectSettings->height = 480;
+	projectSettings->targetFramerate = 144.0;
 
 	Game* currentGame = new Game();
 
