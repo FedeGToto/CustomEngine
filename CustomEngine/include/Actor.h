@@ -12,8 +12,11 @@ public:
 	virtual void Start(Vector2 pos, Texture* newTexture);
 
 	virtual void Update();
+	virtual void LateUpdate() {};
 
 	virtual void Render(SDL_Renderer* renderer);
+
+	virtual void Destroy();
 
 	Vector2 getPos()
 	{
@@ -29,6 +32,7 @@ public:
 	}
 
 	void setPos(float x, float y);
+	void setPos(Vector2 newPos);
 	void setAngle(float angle);
 	void setScale(float w, float h);
 
@@ -38,6 +42,7 @@ public:
 	SDL_Rect getCurrentFrame();
 
 private:
+	int id;
 	Vector2 pos;
 	float angle = 0;
 	Vector2 scale = Vector2(1, 1);

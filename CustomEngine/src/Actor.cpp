@@ -1,5 +1,6 @@
 #include "Actor.h"
 #include <stdio.h>
+#include <vector>
 #include "game.h"
 
 void Actor::Start()
@@ -7,7 +8,8 @@ void Actor::Start()
 	printf("Creating a new actor!\n");
 	canRender = false;
 	// Put the object in the update list
-	Game::activeActors.push_back(this);
+	Game::currentScene->activeActors.push_back(this);
+	id = Game::currentScene->activeActors.size()-1;
 }
 
 void Actor::Start(Vector2 startPos, Texture* newTexture)
@@ -20,7 +22,8 @@ void Actor::Start(Vector2 startPos, Texture* newTexture)
 	currentFrame.h = 32;
 
 	texture = newTexture;
-	Game::activeActors.push_back(this);
+	Game::currentScene->activeActors.push_back(this);
+	id = Game::currentScene->activeActors.size();
 	canRender = true;
 }
 
@@ -33,6 +36,11 @@ void Actor::setPos(float x, float y)
 {
 	pos.x = x;
 	pos.y = y;
+}
+
+void Actor::setPos(Vector2 newPos)
+{
+	pos = newPos;
 }
 
 void Actor::setAngle(float nAngle)
@@ -73,5 +81,17 @@ void Actor::Render(SDL_Renderer* renderer)
 		dst.h = currentFrame.h * scale.y;
 
 		SDL_RenderCopyEx(renderer, texture->getTexture(), &src, &dst, angle, 0, SDL_FLIP_NONE);
+	}
+}
+
+void Actor::Destroy()
+{
+	for (auto i = 0; i <= Game::currentScene->activeActors.size(); ++i)
+	{
+		if (Game::currentScene->activeActors[i]->id == id)
+		{
+			Game::currentScene->activeActors.erase(
+				std::remove(Game::currentScene->activeActors.begin(), Game::currentScene->activeActors.end(), Game::currentScene->activeActors[i]));
+		}
 	}
 }

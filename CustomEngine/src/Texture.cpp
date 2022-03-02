@@ -7,7 +7,6 @@ Texture::Texture(SDL_Renderer* renderer, const char* filePath)
 
 	SDL_Surface* loadedSurface = SDL_LoadBMP(filePath);
 
-
 	texture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 
 	if (texture == NULL)

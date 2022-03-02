@@ -1,4 +1,7 @@
 #include "game.h"
+#include "TestScene.h"
+
+#include "Scene.h"
 
 int main(int argc, char** argv)
 {
@@ -10,9 +13,12 @@ int main(int argc, char** argv)
 
 	Game* currentGame = new Game();
 
+	TestScene* startScene = new TestScene();
+	currentGame->nextScene = startScene;
+
 	currentGame->Init(projectSettings);
 	currentGame->Update();
 	currentGame->Close();
-	
+
 	return 0;
 }

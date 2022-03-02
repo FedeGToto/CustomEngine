@@ -1,8 +1,8 @@
 #pragma once
 #include <SDL.h>
-#include <vector>
 #include "Actor.h"
 #include "Texture.h"
+#include "Scene.h"
 
 using namespace std;
 
@@ -24,9 +24,11 @@ public:
 
 	static bool isRunning;
 
-	static vector<Actor*> activeActors;
 	static double deltaTime;
 	static int FPS;
+
+	static Scene* currentScene;
+	static Scene* nextScene;
 
 	const void Init(ExecutableSettings* newSettings);
 	const void Update();
