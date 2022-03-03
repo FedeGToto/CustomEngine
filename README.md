@@ -4,9 +4,11 @@ A custom game engine by Federico Giorgi
 ## Prerequisites
 - CMake
 - SDL 2
+- Chipmunk 2D
 
 ## Installation
 - [Download SDL 2 here](https://www.libsdl.org/release/SDL2-devel-2.0.20-VC.zip)
+- [Download Chipmunk 2D here](https://chipmunk-physics.net/downloads.php)
 - Create a new file in the root folder of SDL, called `sdl2-config.cmake`
 - Copy and paste the following script in the new file 
 ```
