@@ -1,4 +1,4 @@
-# CustomEngine
+# Custom Engine
 A custom game engine by Federico Giorgi
 
 ## Prerequisites
